@@ -1,0 +1,18 @@
+{
+  "name": "crive-assignment",
+  "version": "1.0.0",
+  "description": "Crive Assignment",
+  "main": "index.js",
+  "scripts": {
+    "start": "index.js"
+  },
+  "author": "Piyush Aggarwal",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2",
+    "mongoose": "^4.13.11",
+    "passport": "^0.4.0",
+    "passport-facebook-token": "^3.3.0"
+  }
+}

@@ -1,0 +1,116 @@
+<html ng-app="criveAssign">
+
+<head>
+    <title>Crive Assignment</title>
+    <link rel="icon" href="img/logo.png" />
+    <!-- CSS -->
+    <link href="fonts/materialicons.css" rel="stylesheet" />
+    <!-- <link rel="stylesheet" href="css/materialize.min.css" /> -->
+
+    <!-- Javascript -->
+    <script type="text/javascript" src="js/jquery/jquery-3.2.1.min.js"></script>
+    <script src="js/materialize/materialize.min.js"></script>
+    <script src="js/angular/angular.min.js"></script>
+    <script type="text/javascript" src="js/countries.js"></script>
+</head>
+
+<body ng-controller="criveController">
+    <div class="container" id="crive" style='text-align:center;'>
+
+
+        <div ng-if="isLoggedIn()" class="row">
+            <img src="{{user.profileimage}}" alt="Smiley face" align="middle">
+            <h4>NAME:{{user.name}}</h4>
+            <h4>GENDER:{{user.gender}}</h4>
+            <form ng-submit="updateAddress()">
+
+
+
+
+                <label for="Address">Address Line 1</label>
+                <input type="text" ng-model="user.addressline1" required/>
+                </br>
+                </br>
+                <label for="Address">Address Line 2</label>
+                <input type="text" ng-model="user.addressline2" required/>
+                </br>
+                </br>
+                <label for="Country">Country
+                    <b>({{ user.country }})</b>
+                </label>
+                <select id="country" name="country" ng-selected="India" ng-model="user.country" required></select>
+                </br>
+                </br>
+
+                <label for="State">State
+                    <b>({{ user.state }})</b>
+                </label>
+                <select name="state" id="state" ng-model="user.state" ng-selected="Delhi" required></select>
+                </br>
+                </br>
+
+
+                <input type="string" ng-model="user.zipcode" ng-change="validateZipCode()" required/>
+                <label for="message">{{checkCountry()}}Code
+                    <span style="color:red" ng-if="user.invalidPin"> Please enter a valid {{checkCountry()}}Code </span>
+                </label>
+                </br>
+                </br>
+                <button class="btn align-center pink"> SAVE</button>
+
+
+                <script language="javascript">
+                    populateCountries("country", "state"); // first parameter is id of country drop-down and second parameter is id of state drop-down
+
+                </script>
+
+
+            </form>
+            <button onclick="logout()">LOGOUT</button>
+        </div>
+        <div ng-if="!isLoggedIn()">
+            <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
+            </fb:login-button>
+        </div>
+    </div>
+    <script src="js/index.js"></script>
+    <script src="js/controllers/user.js"></script>
+    <script>
+
+        window.fbAsyncInit = function () {
+            FB.init({
+                appId: '2022043114477420',
+                cookie: true,
+                xfbml: true,
+                version: 'v2.4'
+            });
+
+            FB.AppEvents.logPageView();
+        };
+
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) { return; }
+            js = d.createElement(s); js.id = id;
+            js.src = "https://connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+
+
+        function checkLoginState() {
+            FB.getLoginStatus(function (response) {
+                console.log("The login status is ==>>" + JSON.stringify(response))
+                angular.element(document.getElementById('crive')).scope().loginWithFb(response);
+            });
+        }
+
+        function logout() {
+            FB.logout(function (response) {
+                console.log("The reposne==>" + JSON.stringify(response))
+                location.reload();
+            });
+        }
+    </script>
+</body>
+
+</html>
