@@ -5,8 +5,8 @@ const User = mongoose.model("userModel");
 var passport = require("passport");
 passport.use(new FacebookTokenStrategy({
 
-    clientID: '2022043114477420',
-    clientSecret: 'b9c5bac1dee274b130933ddfa245d798'
+    clientID: 'CLIENTID',
+    clientSecret: 'CLIENT_SECRET'
 }, function (accessToken, refreshToken, profile, done) {
     // User.findOrCreate({facebookId: profile.id}, function (error, user) {
     //   return done(error, user);
